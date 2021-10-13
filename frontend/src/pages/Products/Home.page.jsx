@@ -3,7 +3,7 @@ import Products from "../../containers/Products.container";
 
 // import { validateProducts } from "./home.logic";
 
-import ProductCardController from "../../components/Products/ProductCardController";
+import ProductCardController from "../../components/product/ProductCardController";
 
 const HomePage = (props) => {
     const productsMapped = ProductCardController(props);

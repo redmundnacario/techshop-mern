@@ -1,16 +1,17 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-
 import ProductPageView from "./ProductPageView";
+import SpinnerLoader from "../common/SpinnerLoader";
+import AlertMessage from "../common/AlertMessage";
 
 const ProductPageController = (props) => {
     const { product, loading, error } = props;
 
     if (loading) {
         return (
-            <Row className="h-100">
-                <Col className="h-100">
-                    <div className="text-center">Loading...</div>
+            <Row>
+                <Col className="position-absolute top-50 start-50 translate-middle">
+                    <SpinnerLoader />
                 </Col>
             </Row>
         );
@@ -20,7 +21,7 @@ const ProductPageController = (props) => {
         return (
             <Row>
                 <Col>
-                    <div className="text-center">No data loaded.</div>
+                    <AlertMessage variant="danger">{error}</AlertMessage>
                 </Col>
             </Row>
         );

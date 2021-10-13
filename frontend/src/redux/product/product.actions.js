@@ -6,16 +6,20 @@ export const getlistProducts = () => async (dispatch) => {
         dispatch({ type: productListTypes.PRODUCT_LIST_REQUEST });
 
         const { data } = await axios("/api/v1/products");
+
         dispatch({
             type: productListTypes.PRODUCT_LIST_SUCCESS,
             payload: data,
         });
     } catch (error) {
+        console.log(error.response.data);
+        console.log(error.response.data.message);
+        console.log(error.message);
         dispatch({
             type: productListTypes.PRODUCT_LIST_FAIL,
             payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
+                error.response && error.response.data.error
+                    ? error.response.data.error
                     : error.message,
         });
     }
@@ -34,9 +38,13 @@ export const getProductDetails = (id) => async (dispatch) => {
         dispatch({
             type: productDetailsTypes.PRODUCT_DETAILS_FAIL,
             payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
+                error.response && error.response.data.error
+                    ? error.response.data.error
                     : error.message,
         });
     }
+};
+
+export const resetProductDetails = () => async (dispatch) => {
+    dispatch({ type: productDetailsTypes.PRODUCT_DETAILS_RESET });
 };

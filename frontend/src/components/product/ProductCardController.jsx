@@ -1,6 +1,8 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import ProductCardView from "./ProductCardView";
+import SpinnerLoader from "../common/SpinnerLoader";
+import AlertMessage from "../common/AlertMessage";
 
 const ProductCardController = (props) => {
     // const productsMapped = validateProducts(props);
@@ -8,9 +10,9 @@ const ProductCardController = (props) => {
 
     if (loading) {
         return (
-            <Row className="h-100">
-                <Col className="h-100">
-                    <div className="text-center">Loading...</div>
+            <Row>
+                <Col className="position-absolute top-50 start-50 translate-middle">
+                    <SpinnerLoader />
                 </Col>
             </Row>
         );
@@ -20,7 +22,7 @@ const ProductCardController = (props) => {
         return (
             <Row>
                 <Col>
-                    <div className="text-center">{error}</div>
+                    <AlertMessage variant="danger">{error}</AlertMessage>
                 </Col>
             </Row>
         );

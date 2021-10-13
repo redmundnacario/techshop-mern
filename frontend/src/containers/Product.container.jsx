@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../redux/product/product.actions";
+import {
+    getProductDetails,
+    resetProductDetails,
+} from "../redux/product/product.actions";
 // import Home from "../page/Home.page";
 
 const Product = (Component) => {
@@ -13,8 +16,12 @@ const Product = (Component) => {
 
         useEffect(() => {
             dispatch(getProductDetails(id));
+
+            return function cleanup() {
+                dispatch(resetProductDetails());
+            };
             // eslint-disable-next-line
-        }, []);
+        }, [dispatch, id]);
 
         const props = {
             product,
