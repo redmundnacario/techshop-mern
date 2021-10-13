@@ -4,9 +4,9 @@ import ProductCardView from "./ProductCardView";
 
 const ProductCardController = (props) => {
     // const productsMapped = validateProducts(props);
-    const { products, isLoading } = props;
+    const { products, loading, error } = props;
 
-    if (isLoading) {
+    if (loading) {
         return (
             <Row className="h-100">
                 <Col className="h-100">
@@ -16,24 +16,30 @@ const ProductCardController = (props) => {
         );
     }
 
-    if (!products) {
+    if (error) {
         return (
             <Row>
                 <Col>
-                    <div className="text-center">No data loaded.</div>
+                    <div className="text-center">{error}</div>
                 </Col>
             </Row>
         );
-    } else {
-        return (
-            <Row>
-                {products.map((product) => (
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <ProductCardView product={product} />
-                    </Col>
-                ))}
-            </Row>
-        );
+    }
+
+    if (products.data) {
+        if (products.data.length > 0) {
+            const { data } = products;
+            console.log(data);
+            return (
+                <Row>
+                    {data.map((product) => (
+                        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                            <ProductCardView product={product} />
+                        </Col>
+                    ))}
+                </Row>
+            );
+        }
     }
 };
 

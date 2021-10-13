@@ -1,37 +1,26 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-// import Home from "../page/Home.page";
+import React, { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getlistProducts } from "../redux/product/product.actions";
 
 const Products = (Component) => {
     const WithStateComponents = () => {
-        const [products, setProducts] = useState([]);
-        const [isLoading, setIsLoading] = useState(false);
+        // const [products, setProducts] = useState([]);
+        // const [isLoading, setIsLoading] = useState(false);
 
-        const fetchAllProducts = () => {
-            setIsLoading(true);
-
-            axios("/api/v1/products")
-                .then((res) => {
-                    console.log(res.data);
-                    return res.data.data;
-                })
-                .then((res) => {
-                    setProducts(res);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        };
-
+        const dispatch = useDispatch();
+        const productList = useSelector((state) => state.productList);
+        const { loading, error, products } = productList;
+        console.log(products);
         useEffect(() => {
-            fetchAllProducts();
+            dispatch(getlistProducts());
             // eslint-disable-next-line
-        }, []);
+        }, [dispatch]);
 
         const props = {
             products,
-            isLoading,
+            loading,
+            error,
         };
         return <Component {...props} />;
     };

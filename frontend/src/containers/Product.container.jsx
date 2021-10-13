@@ -1,46 +1,25 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetails } from "../redux/product/product.actions";
 // import Home from "../page/Home.page";
 
 const Product = (Component) => {
     const WithStateComponents = ({ history, match }) => {
         const id = match.params.id;
 
-        const [product, setProduct] = useState([]);
-        const [isLoading, setIsLoading] = useState(false);
-
-        const fetchSingleProduct = () => {
-            setIsLoading(true);
-            // fetch("../data/products.json")
-            //     .then((res) => res.json())
-            //     .then((res) => {
-            //         const result = res.find((item) => item._id === id);
-            //         setProduct(result);
-            //         setIsLoading(false);
-            //     });
-
-            axios(`/api/v1/products/${id}`)
-                .then((res) => {
-                    console.log(res.data);
-                    return res.data.data;
-                })
-                .then((res) => {
-                    setProduct(res);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        };
+        const dispatch = useDispatch();
+        const productDetails = useSelector((state) => state.productDetails);
+        const { product, loading, error } = productDetails;
 
         useEffect(() => {
-            fetchSingleProduct();
+            dispatch(getProductDetails(id));
             // eslint-disable-next-line
         }, []);
 
         const props = {
             product,
-            isLoading,
+            loading,
+            error,
         };
         return <Component {...props} />;
     };

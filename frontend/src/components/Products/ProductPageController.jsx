@@ -4,9 +4,9 @@ import { Row, Col } from "react-bootstrap";
 import ProductPageView from "./ProductPageView";
 
 const ProductPageController = (props) => {
-    const { product, isLoading } = props;
+    const { product, loading, error } = props;
 
-    if (isLoading) {
+    if (loading) {
         return (
             <Row className="h-100">
                 <Col className="h-100">
@@ -16,7 +16,7 @@ const ProductPageController = (props) => {
         );
     }
 
-    if (!product) {
+    if (error) {
         return (
             <Row>
                 <Col>
@@ -24,8 +24,10 @@ const ProductPageController = (props) => {
                 </Col>
             </Row>
         );
-    } else {
-        return <ProductPageView product={product} />;
+    }
+
+    if (product.data) {
+        return <ProductPageView product={product.data} />;
     }
 };
 
