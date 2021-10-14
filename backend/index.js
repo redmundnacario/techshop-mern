@@ -9,7 +9,6 @@ dotenv.config();
 // Connect to dB
 connectDB();
 
-console.log(process.env.PORT);
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(

@@ -31,7 +31,7 @@ const ProductCardController = (props) => {
     if (products.data) {
         if (products.data.length > 0) {
             const { data } = products;
-            console.log(data);
+
             return (
                 <Row>
                     {data.map((product) => (

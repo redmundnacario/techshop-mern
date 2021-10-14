@@ -12,6 +12,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json()); // json body parser
+app.disable("etag"); // avoid caching
 
 // Dev logging middlewares
 // app.use(logger); //--> using custom logger

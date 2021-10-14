@@ -4,8 +4,19 @@ import ProductPageView from "./ProductPageView";
 import SpinnerLoader from "../common/SpinnerLoader";
 import AlertMessage from "../common/AlertMessage";
 
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../redux/cart/cart.actions";
+
 const ProductPageController = (props) => {
     const { product, loading, error } = props;
+
+    const dispatch = useDispatch();
+
+    const addItemToCartHandler = (e, productToAdd, quantity) => {
+        e.preventDefault();
+        console.log("input quantity", quantity);
+        dispatch(addItemToCart(productToAdd, parseInt(quantity)));
+    };
 
     if (loading) {
         return (
@@ -28,7 +39,11 @@ const ProductPageController = (props) => {
     }
 
     if (product.data) {
-        return <ProductPageView product={product.data} />;
+        const propsToSend = {
+            product: product.data,
+            addItemToCartHandler,
+        };
+        return <ProductPageView {...propsToSend} />;
     }
 };
 

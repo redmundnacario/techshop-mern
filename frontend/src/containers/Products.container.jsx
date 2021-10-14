@@ -11,7 +11,7 @@ const Products = (Component) => {
         const dispatch = useDispatch();
         const productList = useSelector((state) => state.productList);
         const { loading, error, products } = productList;
-        console.log(products);
+
         useEffect(() => {
             dispatch(getlistProducts());
             // eslint-disable-next-line

@@ -1,8 +1,19 @@
-import React from "react";
-import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import {
+    Row,
+    Col,
+    ListGroup,
+    Image,
+    Card,
+    Button,
+    Form,
+} from "react-bootstrap";
 import Rating from "../Rating/Rating.component";
 
 const ProductPage = (props) => {
+    // const [quantity, setQuantity] = useState(1);
+    const ref = useRef();
+
     const {
         name,
         image,
@@ -13,8 +24,8 @@ const ProductPage = (props) => {
         countInStock,
         rating,
         numReviews,
-    } = props;
-    // console.log(props);
+    } = props.product;
+    const { addItemToCartHandler } = props;
     return (
         <Row>
             <Col md={6}>
@@ -56,9 +67,51 @@ const ProductPage = (props) => {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-
+                        {countInStock > 0 && (
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Qty:</Col>
+                                    <Col>
+                                        <Form.Control
+                                            as="select"
+                                            // value={quantity}
+                                            ref={ref}
+                                            onChange={(e) => {
+                                                console.log(
+                                                    "quantity: ",
+                                                    ref.current.value
+                                                );
+                                            }}
+                                        >
+                                            {[
+                                                ...Array(countInStock).keys(),
+                                            ].map((i) => (
+                                                <option
+                                                    key={i + 1}
+                                                    value={i + 1}
+                                                >
+                                                    {i + 1}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        )}
                         <ListGroup.Item className="d-grid">
-                            <Button type="button" disabled={countInStock === 0}>
+                            <Button
+                                type="button"
+                                disabled={countInStock === 0}
+                                onClick={
+                                    // console.log("clicked")
+                                    (e) =>
+                                        addItemToCartHandler(
+                                            e,
+                                            props.product,
+                                            ref.current.value
+                                        )
+                                }
+                            >
                                 Add to Cart
                             </Button>
                         </ListGroup.Item>
