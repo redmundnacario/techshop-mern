@@ -8,7 +8,7 @@ export const addItem = (cart, newItem) => {
     if (itemExists) {
         return cart.map((item) => {
             return item._id === itemExists._id
-                ? { ...item, quantity: itemExists.quantity + newItem.quantity }
+                ? { ...item, quantity: newItem.quantity }
                 : item;
         });
     }
@@ -19,18 +19,14 @@ export const addItem = (cart, newItem) => {
 // REMOVE ITEM: find the item and remove it
 
 export const removeItem = (cart, payload) => {
-    const { itemId, quantity } = payload;
+    const { itemId } = payload;
 
     // find item
     const itemToBeRemoved = cart.find((item) => item._id === itemId);
 
-    if (itemToBeRemoved.quantity === quantity) {
+    if (itemToBeRemoved) {
         return cart.filter((item) => item._id !== itemToBeRemoved._id);
     }
 
-    return cart.map((item) => {
-        return item._id === itemToBeRemoved._id
-            ? { ...item, quantity: item.quantity - quantity }
-            : item;
-    });
+    return cart;
 };

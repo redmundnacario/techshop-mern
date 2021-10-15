@@ -1,36 +1,48 @@
 import React from "react";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
+import CartNavbar from "../../../containers/CartNavbar.container";
 
-const Header = () => {
+const Header = (props) => {
+    const { itemNumber } = props;
+
     return (
-        <header>
+        <header data-test="header">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#home">TechShop</Navbar.Brand>
+                    <Navbar.Brand href="/">TechShop</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse
                         id="basic-navbar-nav"
                         className="justify-content-end"
                     >
                         <Nav>
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
+                            <Nav.Link href="/cart">
+                                <div className="d-inline-flex" id="cartItemNo">
+                                    Cart
+                                    {itemNumber > 0 && (
+                                        <>
+                                            &nbsp;
+                                            <span className="badge rounded-pill bg-primary px-2 ">
+                                                {itemNumber}
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+                            </Nav.Link>
+                            <Nav.Link href="#link">Sign In</Nav.Link>
                             <NavDropdown
-                                title="Dropdown"
+                                title="Account"
                                 id="basic-nav-dropdown"
                             >
                                 <NavDropdown.Item href="#action/3.1">
-                                    Action
+                                    Profile
                                 </NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">
-                                    Something
+                                    Order History
                                 </NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">
-                                    Separated link
+                                <NavDropdown.Item href="/logout">
+                                    logout
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
@@ -41,4 +53,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default CartNavbar(Header);

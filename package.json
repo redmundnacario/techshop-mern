@@ -21,6 +21,9 @@
         "start": "node backend/index",
         "server": "nodemon backend/index",
         "client": "yarn --cwd frontend start",
-        "dev": "concurrently \"yarn server\" \"yarn client\""
+        "client_serve": "yarn --cwd frontend serve",
+        "dev": "concurrently \"yarn server\" \"yarn client\"",
+        "prod": "concurrently \"yarn server\" \"yarn client_serve\"",
+        "test": "NODE_ENV=test jest --verbose"
     }
 }
