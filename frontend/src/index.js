@@ -8,6 +8,8 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
+console.log(process.env.REACT_APP_DEV_API_BASE_URL);
+
 ReactDOM.render(
     <Provider store={store}>
         <App />

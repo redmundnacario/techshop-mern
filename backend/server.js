@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
 
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -19,6 +20,14 @@ app.disable("etag"); // avoid caching
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
+
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        optionsSuccessStatus: 200,
+        methods: "GET, PUT, POST, DELETE",
+    })
+);
 
 // routes
 app.use("/api/v1/products", products);

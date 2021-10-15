@@ -5,7 +5,10 @@ export const getlistProducts = () => async (dispatch) => {
     try {
         dispatch({ type: productListTypes.PRODUCT_LIST_REQUEST });
 
-        const { data } = await axios("/api/v1/products");
+        const { data } = await axios(
+            `${process.env.REACT_APP_DEV_API_BASE_URL}/api/v1/products`,
+            { "Access-Control-Allow-Origin": "http://localhost:3000" }
+        );
 
         dispatch({
             type: productListTypes.PRODUCT_LIST_SUCCESS,
@@ -26,7 +29,9 @@ export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: productDetailsTypes.PRODUCT_DETAILS_REQUEST });
 
-        const { data } = await axios(`/api/v1/products/${id}`);
+        const { data } = await axios(
+            `${process.env.REACT_APP_DEV_API_BASE_URL}/api/v1/products/${id}`
+        );
 
         dispatch({
             type: productDetailsTypes.PRODUCT_DETAILS_SUCCESS,
